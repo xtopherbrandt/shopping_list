@@ -11,12 +11,15 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
 export function amazonOptions(env = process.env) {
+  // Amazon.ca accounts sign in through amazon.com (only Japan uses its own
+  // sign-in site), while the shopping list itself lives on amazon.ca.
   const page = env.AMAZON_PAGE || 'amazon.ca';
+  const language = env.AMAZON_LANGUAGE || 'en-US';
   return {
     amazonPage: page,
-    baseAmazonPage: env.AMAZON_BASE_PAGE || page,
-    acceptLanguage: env.AMAZON_LANGUAGE || 'en-CA',
-    amazonPageProxyLanguage: (env.AMAZON_LANGUAGE || 'en-CA').replace('-', '_'),
+    baseAmazonPage: env.AMAZON_BASE_PAGE || 'amazon.com',
+    acceptLanguage: language,
+    amazonPageProxyLanguage: language.replace('-', '_'),
   };
 }
 

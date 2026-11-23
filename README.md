@@ -81,7 +81,8 @@ Then open `https://<your-app-name>.fly.dev` on each phone, enter the passcode, a
 | `APP_PASSCODE` | none | Family passcode. Set this for any public deployment. |
 | `ALEXA_COOKIE` | none | Alexa sign-in from `npm run alexa-login`, used on first start. |
 | `AMAZON_PAGE` | `amazon.ca` | Amazon site your Alexa account is on. |
-| `AMAZON_LANGUAGE` | `en-CA` | Language for the Amazon sign-in page. |
+| `AMAZON_BASE_PAGE` | `amazon.com` | Amazon site used for sign-in. Amazon.ca accounts sign in through amazon.com. |
+| `AMAZON_LANGUAGE` | `en-US` | Language for the Amazon sign-in page. |
 | `DATA_DIR` | `./data` | Where corrections and the Alexa sign-in are saved. |
 | `PORT` | `8080` | Web server port. |
 | `ALEXA_DEBUG` | off | Set to `1` to log Alexa library details. |
