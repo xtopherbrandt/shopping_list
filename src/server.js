@@ -16,7 +16,7 @@ const alexa = new AlexaList({ dataDir: DATA_DIR, logger: console.log });
 
 if (!process.env.APP_PASSCODE) console.warn('APP_PASSCODE is not set: anyone with the link can see and change the list.');
 
-const app = createApp({ layout, state, alexa, passcode: process.env.APP_PASSCODE || '' });
+const app = createApp({ layout, state, alexa, passcode: process.env.APP_PASSCODE || '', storeName: process.env.STORE_NAME || '' });
 app.listen(PORT, () => console.log(`Shopping list running on http://localhost:${PORT}`));
 
 alexa.start().then(() => console.log(`Alexa: ${alexa.status}${alexa.error ? ` (${alexa.error})` : ''}`));

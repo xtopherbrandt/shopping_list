@@ -9,7 +9,7 @@ const CACHE_MS = 20_000;
 
 // alexa: an object with { status, error, getItems(), complete(item) } (see alexa.js)
 // state: a State (see state.js)
-export function createApp({ layout, state, alexa, passcode = '' }) {
+export function createApp({ layout, state, alexa, passcode = '', storeName = '' }) {
   const app = express();
   app.use(express.json({ limit: '100kb' }));
 
@@ -68,7 +68,7 @@ export function createApp({ layout, state, alexa, passcode = '' }) {
     const { items, error } = await currentItems(req.query.refresh === '1');
     const sorter = new Sorter(layout, state.corrections);
     res.json({
-      store: layout.store,
+      store: storeName || layout.store,
       alexa: { status: alexa.status, error: error || alexa.error || null },
       locations: locations(),
       items: items.map((i) => {

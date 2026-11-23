@@ -1,5 +1,5 @@
 {
-  "store": "Safeway Caulfeild Village",
+  "store": "My grocery store",
   "notes": "Locations are listed in walking order. 'signs' are the words on the aisle sign (shown in the app). 'keywords' are item names the app uses to sort: an item goes to the location with the longest keyword it contains. Corrections made in the app are saved separately and win over keywords.",
   "locations": [
     {
@@ -306,21 +306,21 @@
         "pickles",
         "canned salmon"
       ],
-      "todo": "Chris mentioned tuna and pickles; confirm other items"
+      "todo": "Tuna and pickles are here; confirm other items"
     },
     {
       "id": "deli",
       "name": "Deli",
       "signs": [],
       "keywords": [],
-      "todo": "Chris to describe"
+      "todo": "To describe"
     },
     {
       "id": "bakery",
       "name": "Bakery",
       "signs": [],
       "keywords": [],
-      "todo": "Chris to describe"
+      "todo": "To describe"
     },
     {
       "id": "pharmacy",
@@ -331,8 +331,8 @@
     },
     {
       "id": "non-grocery",
-      "name": "Not from Safeway",
-      "subtitle": "Other errands",
+      "name": "Other errands",
+      "subtitle": "Not from the grocery store",
       "signs": [],
       "keywords": [
         "watch battery",
@@ -345,6 +345,5 @@
         "key cut"
       ]
     }
-  ],
-  "storeAddress": "West Vancouver, BC"
+  ]
 }
