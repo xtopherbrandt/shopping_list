@@ -332,7 +332,7 @@
     {
       "id": "non-grocery",
       "name": "Other errands",
-      "subtitle": "Other errands",
+      "subtitle": "Not from the grocery store",
       "signs": [],
       "keywords": [
         "watch battery",
@@ -345,6 +345,5 @@
         "key cut"
       ]
     }
-  ],
-  "storeAddress": ""
+  ]
 }
