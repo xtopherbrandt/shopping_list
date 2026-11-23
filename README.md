@@ -1,7 +1,7 @@
 # Shopping List
 
-Shows the family's **Alexa shopping list** sorted in the order you walk the store
-(your grocery store), so you can shop top to bottom.
+Shows the family's **Alexa shopping list** sorted in the order you walk your grocery
+store, so you can shop top to bottom.
 
 - Everyone keeps adding items by voice: "Alexa, add milk to my shopping list."
 - Open the app on your phone: items are grouped by area and aisle in walking order.
@@ -79,6 +79,7 @@ Then open `https://<your-app-name>.fly.dev` on each phone, enter the passcode, a
 | Variable | Default | What it does |
 | --- | --- | --- |
 | `APP_PASSCODE` | none | Family passcode. Set this for any public deployment. |
+| `STORE_NAME` | `store` in the layout file | Store name shown at the top of the app. Set it as a secret (`fly secrets set STORE_NAME=...`) to keep it out of the code. |
 | `ALEXA_COOKIE` | none | Alexa sign-in from `npm run alexa-login`, used on first start. |
 | `AMAZON_PAGE` | `amazon.ca` | Amazon site your Alexa account is on. |
 | `AMAZON_BASE_PAGE` | `amazon.com` | Amazon site used for sign-in. Amazon.ca accounts sign in through amazon.com. |
