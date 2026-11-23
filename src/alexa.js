@@ -100,8 +100,12 @@ export class AlexaList {
   async getItems() {
     if (this.status !== 'ok') throw new Error(this.error || 'Alexa is not connected');
     const listId = await this.shoppingListId();
-    const items = await promisify((cb) => this.alexa.getListItemsV2(listId, { limit: 200 }, cb));
-    return (items || [])
+    // Amazon rejects page sizes over 100 (despite its error text saying 200),
+    // and alexa-remote2 turns that rejection into an empty result. Active items
+    // come first, so one page of 100 covers any realistic list.
+    const items = await promisify((cb) => this.alexa.getListItemsV2(listId, { limit: 100 }, cb));
+    if (!Array.isArray(items)) throw new Error('Amazon did not return the list items');
+    return items
       .filter((i) => i.itemStatus !== 'COMPLETE')
       .map((i) => ({ id: i.itemId, name: i.itemName, version: i.version }));
   }
