@@ -62,8 +62,8 @@ costs nothing or a few cents a month.
 # once
 brew install flyctl            # or see https://fly.io/docs/flyctl/install/
 fly auth signup                # or: fly auth login
-fly launch --no-deploy --copy-config --name <pick-a-name>
-fly volumes create shopping_data --size 1 --region sea
+fly launch --no-deploy --copy-config --name <pick-a-name>   # already done: shopping-list-4rtn
+fly volumes create shopping_data --size 1 --region sjc
 fly secrets set APP_PASSCODE=<a family passcode>
 fly secrets set ALEXA_COOKIE=<value printed by npm run alexa-login>
 
