@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f6f43">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Shopping List</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="title">
+      <h1>Shopping List</h1>
+      <p id="store" class="muted"></p>
+    </div>
+    <button id="refresh" class="icon-btn" aria-label="Refresh list" title="Refresh">⟳</button>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <main id="list" aria-live="polite">
+    <p class="muted center">Loading…</p>
+  </main>
+
+  <footer class="bottom">
+    <span id="progress" class="muted"></span>
+    <button id="paste-open" class="btn ghost">Paste list</button>
+    <button id="finish" class="btn primary">Done shopping</button>
+  </footer>
+
+  <!-- Move sheet -->
+  <dialog id="move" class="sheet">
+    <form method="dialog">
+      <h2>Where is <span id="move-name"></span>?</h2>
+      <p class="muted small">It will be sorted here from now on.</p>
+      <div id="move-options" class="options"></div>
+      <button class="btn ghost wide" value="cancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <!-- Paste sheet -->
+  <dialog id="paste" class="sheet">
+    <form method="dialog" id="paste-form">
+      <h2>Paste a list</h2>
+      <p class="muted small">One item per line. Use this if Alexa can't be reached.</p>
+      <textarea id="paste-text" rows="8" placeholder="milk&#10;bananas&#10;dish soap"></textarea>
+      <div class="row">
+        <button class="btn ghost" value="cancel">Cancel</button>
+        <button class="btn primary" value="add" id="paste-add">Add items</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Passcode -->
+  <dialog id="login" class="sheet">
+    <form id="login-form">
+      <h2>Family passcode</h2>
+      <input id="passcode" type="password" autocomplete="current-password" inputmode="text" required>
+      <p id="login-error" class="error small" hidden>That passcode didn't work.</p>
+      <button class="btn primary wide">Open list</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
