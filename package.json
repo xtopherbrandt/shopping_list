@@ -1,0 +1,20 @@
+{
+  "name": "shopping-list",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shows the family's Alexa shopping list sorted by store area and aisle.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "alexa-login": "node scripts/alexa-login.js"
+  },
+  "dependencies": {
+    "alexa-remote2": "^8.1.1",
+    "express": "^4.22.3"
+  }
+}
