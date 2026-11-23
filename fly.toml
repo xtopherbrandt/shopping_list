@@ -1,6 +1,6 @@
-# Fly.io config. Change "app" to the name you pick in `fly launch`.
-app = "shopping-list"
-primary_region = "sea"
+# Fly.io config for the live app (https://shopping-list-4rtn.fly.dev).
+app = "shopping-list-4rtn"
+primary_region = "sjc"
 
 [build]
 
