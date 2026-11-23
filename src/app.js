@@ -52,7 +52,7 @@ export function createApp({ layout, state, alexa, passcode = '', storeName = '' 
     // Items crossed off this trip that Alexa no longer lists still show, crossed out.
     const ids = new Set(items.map((i) => i.id));
     for (const [id, c] of Object.entries(state.data.checked)) {
-      if (!ids.has(id)) items.push({ id, name: c.name, source: c.source, version: c.version });
+      if (!ids.has(id)) items.push({ id, name: c.name, source: c.source });
     }
     return { items, error: fromAlexa.error };
   }
@@ -83,11 +83,24 @@ export function createApp({ layout, state, alexa, passcode = '', storeName = '' 
     return items.find((i) => i.id === id);
   }
 
+  // Ticking an item updates Alexa straight away. If Amazon can't be reached
+  // (say, no signal in the store), the tick is kept here and sent again on
+  // "Done shopping".
   app.post('/api/items/:id/check', async (req, res) => {
     const item = await findItem(req.params.id);
     if (!item) return res.status(404).json({ error: 'Item not found' });
-    state.setChecked(item, Boolean(req.body?.checked));
-    res.json({ ok: true });
+    const checked = Boolean(req.body?.checked);
+    let synced = true;
+    if (item.source === 'alexa') {
+      try {
+        await alexa.setDone(item.id, checked);
+      } catch (err) {
+        synced = false;
+      }
+      cache.at = 0;
+    }
+    state.setChecked(item, checked, synced);
+    res.json({ ok: true, synced });
   });
 
   app.post('/api/items/:id/move', async (req, res) => {
@@ -105,16 +118,20 @@ export function createApp({ layout, state, alexa, passcode = '', storeName = '' 
     res.json({ added: added.length });
   });
 
-  // End of trip: tick crossed-off items in Alexa and clear them from the app.
+  // End of trip: clear crossed-off items from the app, first sending any
+  // ticks that didn't reach Alexa during the trip.
   app.post('/api/finish', async (req, res) => {
-    const checked = Object.entries(state.data.checked);
-    const fresh = checked.some(([, c]) => c.source === 'alexa') ? await alexaItems(true) : { items: [] };
-    const active = new Map(fresh.items.map((i) => [i.id, i]));
     const failed = [];
     let done = 0;
-    for (const [id, c] of checked) {
+    for (const [id, c] of Object.entries(state.data.checked)) {
       try {
-        if (c.source === 'alexa' && active.has(id)) await alexa.complete(active.get(id));
+        if (c.source === 'alexa' && c.synced !== true) {
+          try {
+            await alexa.setDone(id, true);
+          } catch (err) {
+            if (!/no longer on the Alexa list/.test(err.message)) throw err;
+          }
+        }
         if (c.source === 'manual') state.removeManualItem(id);
         delete state.data.checked[id];
         done += 1;

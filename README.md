@@ -5,8 +5,10 @@ store, so you can shop top to bottom.
 
 - Everyone keeps adding items by voice: "Alexa, add milk to my shopping list."
 - Open the app on your phone: items are grouped by area and aisle in walking order.
-- Tap an item to cross it off. Tap **⋯** to move it to the right aisle; the app remembers that for next time.
-- Tap **Done shopping** at the end: crossed-off items are ticked off in Alexa too.
+- Tap an item to cross it off: it is ticked off in Alexa straight away (tap again to undo).
+  Tap **⋯** to move it to the right aisle; the app remembers that for next time.
+- Tap **Done shopping** at the end to clear crossed-off items. Any tick that couldn't
+  reach Alexa during the trip (no signal) is sent then.
 - If Alexa can't be reached, **Paste list** lets you add items by hand.
 
 ## How sorting works

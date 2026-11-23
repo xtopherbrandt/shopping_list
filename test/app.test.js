@@ -13,10 +13,15 @@ class FakeAlexa {
     this.status = 'ok';
     this.error = null;
     this.items = items;
-    this.completed = [];
+    this.done = new Set();
+    this.calls = [];
   }
-  async getItems() { return this.items.filter((i) => !this.completed.includes(i.id)); }
-  async complete(item) { this.completed.push(item.id); }
+  async getItems() { return this.items.filter((i) => !this.done.has(i.id)); }
+  async setDone(id, done) {
+    this.calls.push([id, done]);
+    if (done) this.done.add(id);
+    else this.done.delete(id);
+  }
 }
 
 let server, base, dir, alexa, state;
@@ -68,26 +73,30 @@ test('moving to an unknown location is refused', async () => {
   assert.equal((await post('/api/items/a2/move', { locationId: 'nope' })).status, 400);
 });
 
-test('crossing off is local until "Done shopping", which ticks items in Alexa', async () => {
+test('crossing off ticks the item in Alexa straight away', async () => {
   await start();
-  await post('/api/items/a1/check', { checked: true });
-  let { body } = await get('/api/list');
+  const res = await post('/api/items/a1/check', { checked: true });
+  assert.deepEqual(res.body, { ok: true, synced: true });
+  assert.deepEqual(alexa.calls, [['a1', true]]);
+  // Still shown, crossed out, until "Done shopping".
+  let { body } = await get('/api/list?refresh=1');
   assert.equal(body.items.find((i) => i.id === 'a1').checked, true);
-  assert.deepEqual(alexa.completed, []);
 
   const fin = await post('/api/finish', {});
   assert.deepEqual(fin.body, { done: 1, failed: [] });
-  assert.deepEqual(alexa.completed, ['a1']);
+  assert.deepEqual(alexa.calls, [['a1', true]]);
   ({ body } = await get('/api/list?refresh=1'));
   assert.equal(body.items.find((i) => i.id === 'a1'), undefined);
 });
 
-test('unchecking before finishing leaves Alexa alone', async () => {
+test('unchecking puts the item back on the Alexa list', async () => {
   await start();
   await post('/api/items/a1/check', { checked: true });
   await post('/api/items/a1/check', { checked: false });
-  await post('/api/finish', {});
-  assert.deepEqual(alexa.completed, []);
+  assert.deepEqual(alexa.calls, [['a1', true], ['a1', false]]);
+  assert.equal(alexa.done.has('a1'), false);
+  const { body } = await get('/api/list?refresh=1');
+  assert.equal(body.items.find((i) => i.id === 'a1').checked, false);
 });
 
 test('pasted items are added, sorted and cleared on finish', async () => {
@@ -105,14 +114,23 @@ test('pasted items are added, sorted and cleared on finish', async () => {
   assert.deepEqual(body.items.map((i) => i.name), ['dish soap']);
 });
 
-test('a failed Alexa update is reported and the item stays crossed off', async () => {
-  alexa.complete = async () => { throw new Error('boom'); };
+test('a tick that cannot reach Alexa is kept and sent on "Done shopping"', async () => {
   await start();
-  await post('/api/items/a1/check', { checked: true });
-  const fin = await post('/api/finish', {});
-  assert.deepEqual(fin.body, { done: 0, failed: ['Milk'] });
-  const { body } = await get('/api/list');
+  const realSetDone = alexa.setDone.bind(alexa);
+  alexa.setDone = async () => { throw new Error('no signal'); };
+  const res = await post('/api/items/a1/check', { checked: true });
+  assert.deepEqual(res.body, { ok: true, synced: false });
+  let { body } = await get('/api/list');
   assert.equal(body.items.find((i) => i.id === 'a1').checked, true);
+
+  // Still offline: finishing reports it and keeps it crossed off.
+  let fin = await post('/api/finish', {});
+  assert.deepEqual(fin.body, { done: 0, failed: ['Milk'] });
+
+  alexa.setDone = realSetDone;
+  fin = await post('/api/finish', {});
+  assert.deepEqual(fin.body, { done: 1, failed: [] });
+  assert.equal(alexa.done.has('a1'), true);
 });
 
 test('passcode is required when set', async () => {
