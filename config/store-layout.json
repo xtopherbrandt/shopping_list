@@ -1,0 +1,334 @@
+{
+  "store": "My grocery store",
+  "notes": "Locations are listed in walking order. 'signs' are the words on the aisle sign (shown in the app). 'keywords' are item names the app uses to sort: an item goes to the location with the longest keyword it contains. Corrections made in the app are saved separately and win over keywords.",
+  "locations": [
+    {
+      "id": "meat",
+      "name": "Meat & Seafood",
+      "signs": [],
+      "keywords": [
+        "chicken",
+        "beef",
+        "ground beef",
+        "pork",
+        "bacon",
+        "sausage",
+        "steak",
+        "fish",
+        "salmon",
+        "turkey",
+        "ham",
+        "lamb",
+        "shrimp",
+        "chicken breast",
+        "chicken thighs",
+        "pork chops",
+        "ribs"
+      ]
+    },
+    {
+      "id": "aisle-1",
+      "name": "Aisle 1",
+      "subtitle": "Home care",
+      "signs": [
+        "pet supplies",
+        "trash bags",
+        "fabric care",
+        "cleaning supplies",
+        "dish soap",
+        "laundry"
+      ],
+      "keywords": [
+        "dog food",
+        "cat food",
+        "cat litter",
+        "pet",
+        "garbage bags",
+        "trash bags",
+        "fabric softener",
+        "dryer sheets",
+        "bleach",
+        "cleaner",
+        "sponges",
+        "dish soap",
+        "dishwasher",
+        "detergent",
+        "laundry",
+        "fabric care",
+        "cleaning supplies",
+        "pet supplies"
+      ]
+    },
+    {
+      "id": "aisle-2",
+      "name": "Aisle 2",
+      "subtitle": "Personal care",
+      "signs": [
+        "bath tissue",
+        "feminine care",
+        "first aid",
+        "paper towels",
+        "oral care"
+      ],
+      "keywords": [
+        "toilet paper",
+        "bath tissue",
+        "tampons",
+        "pads",
+        "band-aids",
+        "bandages",
+        "paper towels",
+        "toothpaste",
+        "toothbrush",
+        "floss",
+        "mouthwash",
+        "shampoo",
+        "body wash",
+        "deodorant",
+        "feminine care",
+        "first aid",
+        "oral care",
+        "kleenex",
+        "tissues",
+        "facial tissue"
+      ]
+    },
+    {
+      "id": "aisle-3",
+      "name": "Aisle 3",
+      "subtitle": "Snack time",
+      "signs": [
+        "chips",
+        "popcorn & nuts",
+        "soft drinks",
+        "water"
+      ],
+      "keywords": [
+        "chips",
+        "tortilla chips",
+        "salsa",
+        "popcorn",
+        "nuts",
+        "peanuts",
+        "almonds",
+        "pop",
+        "soda",
+        "soft drinks",
+        "ginger ale",
+        "water",
+        "sparkling water",
+        "popcorn & nuts",
+        "crackers",
+        "cookies"
+      ]
+    },
+    {
+      "id": "aisle-4",
+      "name": "Aisle 4",
+      "signs": [],
+      "keywords": [],
+      "todo": "No photo yet"
+    },
+    {
+      "id": "aisle-5",
+      "name": "Aisle 5",
+      "signs": [],
+      "keywords": [],
+      "todo": "No photo yet"
+    },
+    {
+      "id": "aisle-6",
+      "name": "Aisle 6",
+      "subtitle": "Canned, pasta & soup",
+      "signs": [
+        "can vegetables",
+        "can prepared",
+        "conven. breakfast",
+        "pasta",
+        "soups",
+        "stuffing & gravy"
+      ],
+      "keywords": [
+        "canned corn",
+        "canned beans",
+        "canned tomatoes",
+        "chili",
+        "ravioli",
+        "breakfast bars",
+        "granola bars",
+        "pasta",
+        "spaghetti",
+        "macaroni",
+        "noodles",
+        "soup",
+        "broth",
+        "stock",
+        "stuffing",
+        "gravy",
+        "can vegetables",
+        "canned vegetables",
+        "kraft dinner",
+        "mac and cheese",
+        "oatmeal",
+        "cereal",
+        "pasta sauce"
+      ]
+    },
+    {
+      "id": "aisle-7",
+      "name": "Aisle 7",
+      "subtitle": "Frozen",
+      "signs": [
+        "breakfast",
+        "desserts",
+        "ice cream",
+        "entrees",
+        "pizza"
+      ],
+      "keywords": [
+        "frozen waffles",
+        "frozen pancakes",
+        "frozen dessert",
+        "ice cream",
+        "popsicles",
+        "frozen dinner",
+        "frozen pizza",
+        "pizza",
+        "frozen fries",
+        "frozen vegetables",
+        "frozen",
+        "frozen breakfast",
+        "frozen entrees",
+        "frozen berries"
+      ]
+    },
+    {
+      "id": "aisle-8",
+      "name": "Aisle 8",
+      "subtitle": "Condiments, bread & dairy",
+      "signs": [
+        "condiments",
+        "bread",
+        "yogurt",
+        "cheese",
+        "butter"
+      ],
+      "keywords": [
+        "ketchup",
+        "mustard",
+        "mayo",
+        "relish",
+        "bread",
+        "bagels",
+        "buns",
+        "tortillas",
+        "cheese",
+        "butter",
+        "margarine",
+        "condiments",
+        "hot sauce",
+        "bbq sauce",
+        "salad dressing",
+        "english muffins",
+        "cream cheese"
+      ]
+    },
+    {
+      "id": "dairy",
+      "name": "Dairy (end of aisles 7 & 8)",
+      "signs": [],
+      "keywords": [
+        "milk",
+        "cream",
+        "half and half",
+        "yogurt",
+        "eggs",
+        "sour cream",
+        "cottage cheese",
+        "oat milk",
+        "almond milk"
+      ],
+      "todo": "Confirm eggs are here"
+    },
+    {
+      "id": "produce",
+      "name": "Produce",
+      "signs": [],
+      "keywords": [
+        "apples",
+        "bananas",
+        "lettuce",
+        "tomatoes",
+        "onions",
+        "potatoes",
+        "carrots",
+        "peppers",
+        "fruit",
+        "vegetables",
+        "lemons",
+        "limes",
+        "oranges",
+        "grapes",
+        "strawberries",
+        "blueberries",
+        "raspberries",
+        "avocado",
+        "cucumber",
+        "celery",
+        "broccoli",
+        "cauliflower",
+        "spinach",
+        "kale",
+        "mushrooms",
+        "garlic",
+        "ginger",
+        "zucchini",
+        "sweet potatoes",
+        "berries",
+        "pears",
+        "peaches",
+        "melon",
+        "watermelon",
+        "cilantro",
+        "parsley",
+        "herbs",
+        "green onions",
+        "salad"
+      ]
+    },
+    {
+      "id": "near-produce",
+      "name": "Canned goods near produce",
+      "signs": [],
+      "keywords": [
+        "tuna",
+        "canned tuna",
+        "pickles",
+        "canned salmon"
+      ],
+      "todo": "Tuna and pickles are here; confirm other items"
+    },
+    {
+      "id": "deli",
+      "name": "Deli",
+      "signs": [],
+      "keywords": [],
+      "todo": "To describe"
+    },
+    {
+      "id": "bakery",
+      "name": "Bakery",
+      "signs": [],
+      "keywords": [],
+      "todo": "To describe"
+    },
+    {
+      "id": "pharmacy",
+      "name": "Pharmacy",
+      "signs": [],
+      "keywords": [],
+      "todo": "Seen in background of aisle 1 photo; confirm"
+    }
+  ],
+  "storeAddress": ""
+}
