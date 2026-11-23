@@ -51,3 +51,10 @@ test('a correction to a location that no longer exists is ignored', () => {
   const s = new Sorter(layout, { milk: 'aisle-99' });
   assert.equal(s.locate('milk').locationId, 'dairy');
 });
+
+test('non-grocery items go to their own section at the end', () => {
+  const s = new Sorter(layout);
+  assert.equal(s.locate('watch battery').locationId, 'non-grocery');
+  assert.equal(s.locate('Watch batteries').locationId, 'non-grocery');
+  assert.equal(layout.locations.at(-1).id, 'non-grocery');
+});

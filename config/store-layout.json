@@ -328,6 +328,22 @@
       "signs": [],
       "keywords": [],
       "todo": "Seen in background of aisle 1 photo; confirm"
+    },
+    {
+      "id": "non-grocery",
+      "name": "Not from Safeway",
+      "subtitle": "Other errands",
+      "signs": [],
+      "keywords": [
+        "watch battery",
+        "light bulb",
+        "hardware",
+        "dry cleaning",
+        "post office",
+        "stamps",
+        "hardware store",
+        "key cut"
+      ]
     }
   ],
   "storeAddress": "West Vancouver, BC"
