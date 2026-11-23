@@ -96,7 +96,8 @@
     render();
     store.set(data);
     try {
-      await api(`/api/items/${encodeURIComponent(item.id)}/check`, { checked: item.checked });
+      const res = await api(`/api/items/${encodeURIComponent(item.id)}/check`, { checked: item.checked });
+      if (res.synced === false) banner('Saved here, but Alexa couldn\'t be reached. It will be updated when you tap "Done shopping".');
     } catch (err) {
       if (err.message !== 'login') banner(`Couldn't save that tick (${err.message}). Try again when you have signal.`);
     }
@@ -133,7 +134,7 @@
     $('#finish').disabled = true;
     try {
       const res = await api('/api/finish', {});
-      banner(res.failed.length ? `Couldn't tick off in Alexa: ${res.failed.join(', ')}. Try "Done shopping" again.` : `Nice! ${res.done} item${res.done === 1 ? '' : 's'} cleared from the list.`);
+      banner(res.failed.length ? `Couldn't update Alexa for: ${res.failed.join(', ')}. Try "Done shopping" again.` : `Nice! ${res.done} item${res.done === 1 ? '' : 's'} cleared from the list.`);
       await load(true);
     } catch (err) {
       if (err.message !== 'login') banner(`Couldn't finish (${err.message}).`);

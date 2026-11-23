@@ -1,7 +1,7 @@
 // Small JSON file store for everything the app learns or tracks:
 //   corrections  normalized item name -> location id (saved when you move an item)
 //   manualItems  items added with "Paste list" (backup for when Alexa is unreachable)
-//   checked      item id -> { name, source, version } crossed off during the current trip
+//   checked      item id -> { name, source, synced } crossed off during the current trip
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -51,8 +51,9 @@ export class State {
     this.data.manualItems = this.data.manualItems.filter((i) => i.id !== id);
   }
 
-  setChecked(item, checked) {
-    if (checked) this.data.checked[item.id] = { name: item.name, source: item.source, version: item.version ?? null };
+  // synced: false when the tick couldn't be sent to Alexa yet.
+  setChecked(item, checked, synced = true) {
+    if (checked) this.data.checked[item.id] = { name: item.name, source: item.source, synced };
     else delete this.data.checked[item.id];
     this.save();
   }

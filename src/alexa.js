@@ -96,8 +96,8 @@ export class AlexaList {
     return this.listId;
   }
 
-  // Active (not yet completed) items: [{ id, name, version }]
-  async getItems() {
+  // Every item on the list, ticked or not, as Amazon returns it.
+  async allItems() {
     if (this.status !== 'ok') throw new Error(this.error || 'Alexa is not connected');
     const listId = await this.shoppingListId();
     // Amazon rejects page sizes over 100 (despite its error text saying 200),
@@ -105,22 +105,34 @@ export class AlexaList {
     // come first, so one page of 100 covers any realistic list.
     const items = await promisify((cb) => this.alexa.getListItemsV2(listId, { limit: 100 }, cb));
     if (!Array.isArray(items)) throw new Error('Amazon did not return the list items');
-    return items
+    return items;
+  }
+
+  // Active (not yet completed) items: [{ id, name, version }]
+  async getItems() {
+    return (await this.allItems())
       .filter((i) => i.itemStatus !== 'COMPLETE')
       .map((i) => ({ id: i.itemId, name: i.itemName, version: i.version }));
   }
 
-  // Marks an item done in Alexa, the same as ticking it in the Alexa app.
-  async complete(item) {
+  // Ticks an item off in Alexa (done = true) or puts it back (done = false),
+  // the same as tapping it in the Alexa app. Amazon needs the item's current
+  // version, so it is read fresh each time.
+  async setDone(id, done) {
+    const current = (await this.allItems()).find((i) => i.itemId === id);
+    if (!current) throw new Error('Item is no longer on the Alexa list');
+    const status = done ? 'COMPLETE' : 'ACTIVE';
+    if (current.itemStatus === status) return;
     const listId = await this.shoppingListId();
     const request = {
       method: 'PUT',
       data: JSON.stringify({
-        itemAttributesToUpdate: [{ type: 'itemStatus', value: 'COMPLETE' }],
+        itemAttributesToUpdate: [{ type: 'itemStatus', value: status }],
         itemAttributesToRemove: [],
       }),
     };
-    const url = `https://www.${this.alexa._options.amazonPage}/alexashoppinglists/api/v2/lists/${listId}/items/${encodeURIComponent(item.id)}?version=${item.version}`;
-    await promisify((cb) => this.alexa.httpsGet(url, cb, request));
+    const url = `https://www.${this.alexa._options.amazonPage}/alexashoppinglists/api/v2/lists/${listId}/items/${encodeURIComponent(id)}?version=${current.version}`;
+    const res = await promisify((cb) => this.alexa.httpsGet(url, cb, request));
+    if (res && res.errorMessage) throw new Error(res.errorMessage);
   }
 }
