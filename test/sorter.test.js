@@ -58,3 +58,18 @@ test('non-grocery items go to their own section at the end', () => {
   assert.equal(s.locate('Watch batteries').locationId, 'non-grocery');
   assert.equal(layout.locations.at(-1).id, 'non-grocery');
 });
+
+test('aisles 4 and 5 sort baking, snacks and breakfast items', () => {
+  const s = new Sorter(layout);
+  const where = (name) => s.locate(name).locationId;
+  assert.equal(where('cupcake holders'), 'aisle-4');
+  assert.equal(where('peanut butter'), 'aisle-4');
+  assert.equal(where('olive oil'), 'aisle-4');
+  assert.equal(where('cookies'), 'aisle-4');
+  assert.equal(where('aluminum foil'), 'aisle-4');
+  assert.equal(where('cereal'), 'aisle-5');
+  assert.equal(where('orange juice'), 'aisle-5');
+  assert.equal(where('coffee'), 'aisle-5');
+  assert.equal(where('maple syrup'), 'aisle-5');
+  assert.equal(where('granola bars'), 'aisle-6');
+});
